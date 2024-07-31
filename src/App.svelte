@@ -3,30 +3,42 @@
 	import Home from "./vistas/Home.svelte";
 	import Perfil from "./vistas/Perfil.svelte";
 	import About from "./vistas/About.svelte";
-	export let name;
+	import Login from "./vistas/Login.svelte";
+
+	import {onMount} from "svelte";
+	import {navigate} from "svelte-routing";
+	import {operadorStore} from "./stores/User.js";
+	import BarraMenu from "./componentes/BarraMenu.svelte";
+
+
+	onMount(() => {
+		if($operadorStore == null)
+		{
+			navigate('login',{replace:true})
+		}
+	})
 </script>
 
 <main>
-	<h1>Hello {name}!</h1>
-
 	<Router>
-		<nav>
-			<Link to="/">Home</Link>
-			<Link to="/about">About</Link>
-			<Link to="/perfil">Perfil</Link>
-		</nav>
 
+		<!-- BARRA DE MENU: -->
+		<BarraMenu/>
+
+		<!-- EL CONTENIDO: -->
 		<Route path="/">
-			<Home></Home>
+			<Home/>
 		</Route>
 		<Route path="/about">
-			<About></About>
+			<About/>
 		</Route>
 		<Route path="/perfil">
-			<Perfil></Perfil>
+			<Perfil/>
+		</Route>
+		<Route path="/login">
+			<Login/>
 		</Route>
 	</Router>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
 </main>
 
 <style>
